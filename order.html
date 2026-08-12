@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BookStore | Orders</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .order-page {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .order-header {
+            background: linear-gradient(120deg, #4f46e5, #6366f1);
+            color: white;
+            padding: 40px 45px;
+            border-radius: 22px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 28px;
+        }
+
+        .order-header h1 {
+            font-size: 34px;
+            margin: 10px 0;
+        }
+
+        .order-header p {
+            opacity: 0.85;
+            font-size: 14px;
+        }
+
+        .order-header-icon {
+            font-size: 80px;
+        }
+
+        .order-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .order-stat {
+            background: white;
+            border: 1px solid #eeeeee;
+            border-radius: 16px;
+            padding: 22px;
+
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .order-stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 13px;
+            background: #eeedff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        .order-stat p {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .order-stat h2 {
+            color: #222;
+            font-size: 23px;
+        }
+
+        .order-actions {
+            background: white;
+            padding: 22px 25px;
+            border-radius: 16px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border: 1px solid #eeeeee;
+            margin-bottom: 25px;
+        }
+
+        .order-actions h2 {
+            font-size: 20px;
+        }
+
+        .order-actions p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .add-order {
+            background: #4f46e5;
+            color: white;
+            border: none;
+
+            padding: 13px 22px;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .add-order:hover {
+            background: #4338ca;
+        }
+
+        /* FORM */
+
+        .order-form {
+            display: none;
+
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 16px;
+
+            border: 1px solid #eeeeee;
+
+            margin-bottom: 25px;
+        }
+
+        .order-form h2 {
+            margin-bottom: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            box-sizing: border-box;
+
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #4f46e5;
+        }
+
+        .form-buttons {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .save-btn {
+            background: #4f46e5;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #4338ca;
+        }
+
+        .cancel-btn {
+            background: #eeeeee;
+
+            color: #444;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background: #dddddd;
+        }
+
+        /* ORDER CARDS */
+
+        .order-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .order-card {
+            background: white;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 16px;
+
+            padding: 24px;
+
+            transition: 0.25s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .order-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .order-icon {
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 13px;
+
+            background: #e9f5ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 27px;
+        }
+
+        .order-status {
+            background: #e9f9ef;
+
+            color: #168344;
+
+            padding: 6px 11px;
+
+            border-radius: 15px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+        .order-card h3 {
+            font-size: 18px;
+
+            margin-bottom: 14px;
+        }
+
+        .order-info {
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 2;
+        }
+
+        .order-price {
+            border-top: 1px solid #eeeeee;
+
+            margin-top: 15px;
+
+            padding-top: 15px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .order-price span {
+            color: #999;
+
+            font-size: 12px;
+        }
+
+        .order-price strong {
+            color: #4f46e5;
+
+            font-size: 18px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .order-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .order-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .order-page {
+                width: 92%;
+            }
+
+            .order-header {
+                padding: 30px;
+            }
+
+            .order-header-icon {
+                display: none;
+            }
+
+            .order-actions {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .order-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                📚
+            </div>
+
+            <div>
+
+                <h2>
+                    BookStore
+                </h2>
+
+                <span>
+                    Online Book Management
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Books
+            </a>
+
+            <a href="customer.html">
+                Customers
+            </a>
+
+            <a href="order.html"
+               class="active">
+                Orders
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- MAIN PAGE -->
+
+    <main class="order-page">
+
+
+        <!-- HEADER -->
+
+        <section class="order-header">
+
+            <div>
+
+                <p>
+                    ORDER MANAGEMENT
+                </p>
+
+                <h1>
+                    Book Orders
+                </h1>
+
+                <p>
+                    Manage customer orders
+                    and bookstore sales.
+                </p>
+
+            </div>
+
+            <div class="order-header-icon">
+                🛒
+            </div>
+
+        </section>
+
+
+
+        <!-- STATISTICS -->
+
+        <section class="order-stats">
+
+
+            <div class="order-stat">
+
+                <div class="order-stat-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Orders
+                    </p>
+
+                    <h2 id="totalOrders">
+                        3
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="order-stat">
+
+                <div class="order-stat-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <p>
+                        Books Ordered
+                    </p>
+
+                    <h2>
+                        5
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="order-stat">
+
+                <div class="order-stat-icon">
+                    💰
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Sales
+                    </p>
+
+                    <h2>
+                        ₹2,250
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ACTION BAR -->
+
+        <section class="order-actions">
+
+            <div>
+
+                <h2>
+                    Recent Orders
+                </h2>
+
+                <p>
+                    View the latest bookstore orders
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="add-order"
+                onclick="openOrderForm()">
+
+                + Create Order
+
+            </button>
+
+        </section>
+
+
+
+        <!-- CREATE ORDER FORM -->
+
+        <section
+            id="orderForm"
+            class="order-form">
+
+
+            <h2>
+                Create New Order
+            </h2>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Customer Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="orderCustomer"
+                        placeholder="Enter customer name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Book Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="orderBook"
+                        placeholder="Enter book name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="orderQuantity"
+                        min="1"
+                        placeholder="Enter quantity">
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-buttons">
+
+
+                <button
+                    type="button"
+                    class="save-btn"
+                    onclick="saveOrder()">
+
+                    Save Order
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeOrderForm()">
+
+                    Cancel
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ORDER CARDS -->
+
+        <section
+            class="order-grid"
+            id="orderGrid">
+
+
+            <div class="order-card">
+
+                <div class="order-top">
+
+                    <div class="order-icon">
+                        🛒
+                    </div>
+
+                    <span class="order-status">
+                        COMPLETED
+                    </span>
+
+                </div>
+
+                <h3>
+                    Order #101
+                </h3>
+
+                <div class="order-info">
+
+                    👤 Customer: Priya
+
+                    <br>
+
+                    📖 Book: Spring Boot Basics
+
+                    <br>
+
+                    📦 Quantity: 2
+
+                </div>
+
+                <div class="order-price">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <strong>
+                        ₹900
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="order-card">
+
+               

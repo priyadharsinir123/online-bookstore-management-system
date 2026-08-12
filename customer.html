@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BookStore | Customers</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .customer-page {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .customer-header {
+            background: linear-gradient(120deg, #4f46e5, #6366f1);
+            color: white;
+            padding: 38px 45px;
+            border-radius: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .customer-header h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .customer-header p {
+            opacity: 0.85;
+            font-size: 14px;
+        }
+
+        .customer-header-icon {
+            font-size: 90px;
+        }
+
+        .customer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 22px 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid #eeeeee;
+        }
+
+        .customer-actions h2 {
+            font-size: 20px;
+        }
+
+        .customer-actions p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .add-customer {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-customer:hover {
+            background: #4338ca;
+        }
+
+        .customer-form {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #eeeeee;
+            margin-bottom: 25px;
+        }
+
+        .customer-form h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #4f46e5;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .save-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cancel-btn {
+            background: #eee;
+            color: #444;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .customer-card {
+            background: white;
+            border: 1px solid #eeeeee;
+            border-radius: 16px;
+            padding: 25px;
+            transition: 0.25s;
+        }
+
+        .customer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .customer-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #eeedff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .customer-card h3 {
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
+        .customer-info {
+            color: #777;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .customer-id {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 10px;
+            background: #f0efff;
+            color: #4f46e5;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+
+            .customer-grid,
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .customer-page {
+                width: 92%;
+            }
+
+            .customer-header {
+                padding: 30px;
+            }
+
+            .customer-header-icon {
+                display: none;
+            }
+
+            .customer-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .customer-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                📚
+            </div>
+
+            <div>
+
+                <h2>BookStore</h2>
+
+                <span>
+                    Online Book Management
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Books
+            </a>
+
+            <a href="customer.html" class="active">
+                Customers
+            </a>
+
+            <a href="order.html">
+                Orders
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="customer-page">
+
+
+        <!-- HEADER -->
+
+        <section class="customer-header">
+
+            <div>
+
+                <p class="small-title">
+                    CUSTOMER MANAGEMENT
+                </p>
+
+                <h1>
+                    Our Customers
+                </h1>
+
+                <p>
+                    Manage your bookstore customers easily.
+                </p>
+
+            </div>
+
+
+            <div class="customer-header-icon">
+                👥
+            </div>
+
+        </section>
+
+
+
+        <!-- ACTION BAR -->
+
+        <section class="customer-actions">
+
+            <div>
+
+                <h2>
+                    Customer List
+                </h2>
+
+                <p id="customerCount">
+                    3 registered customers
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-customer"
+                onclick="openCustomerForm()">
+
+                + Add Customer
+
+            </button>
+
+        </section>
+
+
+
+        <!-- FORM -->
+
+        <section
+            id="customerForm"
+            class="customer-form">
+
+            <h2>
+                Add New Customer
+            </h2>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Customer Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        placeholder="Enter name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="customerEmail"
+                        placeholder="Enter email">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customerPhone"
+                        placeholder="Enter phone">
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button
+                    class="save-btn"
+                    onclick="saveCustomer()">
+
+                    Save Customer
+
+                </button>
+
+
+                <button
+                    class="cancel-btn"
+                    onclick="closeCustomerForm()">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CUSTOMERS -->
+
+        <section class="customer-grid"
+                 id="customerGrid">
+
+
+            <div class="customer-card">
+
+                <div class="customer-avatar">
+                    👩
+                </div>
+
+                <h3>
+                    Priya
+                </h3>
+
+                <div class="customer-info">
+
+                    📧 priya@gmail.com
+                    <br>
+                    📱 9876543210
+
+                </div>
+
+                <span class="customer-id">
+                    Customer ID: 2
+                </span>
+
+            </div>
+
+
+            <div class="customer-card">
+
+                <div class="customer-avatar">
+                    👨
+                </div>
+
+                <h3>
+                    Arun
+                </h3>
+
+                <div class="customer-info">
+
+                    📧 arun@gmail.com
+                    <br>
+                    📱 9876543211
+
+                </div>
+
+                <span class="customer-id">
+                    Customer ID: 3
+                </span>
+
+            </div>
+
+
+            <div class="customer-card">
+
+                <div class="customer-avatar">
+                    👩
+                </div>
+
+                <h3>
+                    Divya
+                </h3>
+
+                <div class="customer-info">
+
+                    📧 divya@gmail.com
+                    <br>
+                    📱 9876543212
+
+                </div>
+
+                <span class="customer-id">
+                    Customer ID: 4
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <footer>
+
+        <p>
+            © 2026 BookStore Management System
+        </p>
+
+        <span>
+            Online Book Store
+        </span>
+
+    </footer>
+
+
+
+    <script src="customer.js"></script>
+
+</body>
+
+</html>
